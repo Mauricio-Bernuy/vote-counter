@@ -1,23 +1,21 @@
+## build docker image
+docker build -t test-image .
+
 ## setup kubernetes cluster
 kubectl apply -f deployment.yaml
 kubectl apply -f service.yaml
 minikube service test-dep
 
-## delete cluster
+## delete cluster (in case you change it)
 kubectl delete -f deployment.yaml
 kubectl delete -f service.yaml
 
-
-## other commands
-kubectl rollout status deployment/test-dep
-
+## list online systems
 kubectl get deployments
 kubectl get pods
 kubectl get services
 
-kubectl config view
+## other commands
+kubectl rollout status deployment/test-dep
 kubectl expose deployment test-dep --type=LoadBalancer --port=5000
-minikube service test-dep
-
-kubectl delete -f deployment.yaml
-kubectl delete -f service.yaml
+kubectl config view
