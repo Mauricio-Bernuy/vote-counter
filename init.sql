@@ -36,7 +36,6 @@ INSERT INTO votos VALUES('regiontest', 'provinciatest', 'ciudadtest', 123456, 'L
 (region != 'Lima' OR region != 'La Libertad' OR region != 'Arequipa')
 
 
-
 SELECT 1 FROM conteovotos WHERE candidato={candidato};
 SELECT 1 FROM conteoregion WHERE region={region};
 SELECT 1 FROM conteovalido WHERE esvalido={esvalido};
@@ -48,6 +47,14 @@ UPDATE conteovotos set conteo = conteo + 1 WHERE (region = {region} AND candidat
 UPDATE conteoregion set conteo = conteo + 1 WHERE (region = {region});
 UPDATE conteovalido set conteo = conteo + 1 WHERE (esvalido = {esvalido});
 
+else:
+INSERT INTO conteovotos VALUES({region},{candidato},0);
+INSERT INTO conteoregion VALUES({region},0);
+INSERT INTO conteovalido VALUES({esvalido},0);
+
+
+db_conn.invalidate()
+db_conn.close()
 else:
 
 INSERT INTO conteovotos VALUES({region},{candidato},0);
