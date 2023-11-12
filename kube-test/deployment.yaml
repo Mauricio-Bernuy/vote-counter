@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: test-container
-        image: test-image
-        imagePullPolicy: Never
+        image: test-image:local
+        imagePullPolicy: Never 
         ports:
         - containerPort: 5000
