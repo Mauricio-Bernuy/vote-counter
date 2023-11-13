@@ -1,5 +1,6 @@
 from kafka import KafkaConsumer
 from json import loads
+from json import loads
 
 consumer = KafkaConsumer(
     'numtest',
