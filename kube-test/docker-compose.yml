@@ -9,8 +9,8 @@ services:
       - '29092'
     volumes:
       - "kafka_data:/bitnami"
-    networks:
-      - container
+    # networks:
+    #   - container
     environment:
       - KAFKA_ENABLE_KRAFT=yes
       - KAFKA_CFG_NODE_ID=1
@@ -22,34 +22,36 @@ services:
       - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,EXTERNAL://localhost:9094
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@:9093
       - ALLOW_PLAINTEXT_LISTENER=yes
-
-  kafka-init:
-    image: 'docker.io/bitnami/kafka:latest'
-    networks:
-      - container
-    command: [ "sh", "/create_topic.sh"]
+    # command: [ "sh", "/create_topic.sh"]
     depends_on:
-      kafka:
-        condition: service_started
-    volumes:
-      - type: bind
-        source: ./create_topic.sh
-        target: /create_topic.sh
-    init: true
+      - migration
+
+  migration:
+    ports:
+      - '9090:9090'
+    build: .
+    image: 'docker.io/bitnami/kafka:latest'
+    command:  sh -c "kafka-topics.sh --create --topic numtest --partitions 1 --bootstrap-server kafka:9092 || kafka-topics.sh --alter --topic numtest --partitions 6 --bootstrap-server kafka:9092"
+
+  # kafka-init:
+  #   image: 'docker.io/bitnami/kafka:latest'
+  #   networks:
+  #     - container
+  #   command: [ "sh", "/create_topic.sh"]
+  #   depends_on:
+  #     kafka:
+  #       condition: service_started
+  #   volumes:
+  #     - type: bind
+  #       source: ./create_topic.sh
+  #       target: /create_topic.sh
+  #   init: true
     
 volumes:
   kafka_data:
     driver: local
 
-networks:
-  container:
-    name: net
+# networks:
+#   container:
+#     name: net
 
-
-# kafka-topics.sh --bootstrap-server localhost:9092 --create --topic pageview
-# kafka-topics.sh --bootstrap-server localhost:9092 --list
-
-# kafka-topics.sh --describe --topic numtest  --bootstrap-server kafka:9092
-
-# kafka-console-producer.sh --producer.config /opt/bitnami/kafka/config/producer.properties --bootstrap-server 127.0.0.1:9094 --topic test
-# kafka-console-consumer.sh --consumer.config /opt/bitnami/kafka/config/consumer.properties --bootstrap-server 127.0.0.1:9094 --topic test --from-beginning

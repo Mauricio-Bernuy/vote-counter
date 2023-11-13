@@ -8,16 +8,16 @@ from kafka import KafkaConsumer
 
 
 app = Flask(__name__)
-# KAFKA_IP = "10.111.253.26"
-KAFKA_IP = "localhost"
+KAFKA_IP = "10.98.91.16" # kafka cluster ip
+# KAFKA_IP = "localhost"
 
-producer = KafkaProducer(bootstrap_servers=[f'{KAFKA_IP}:9094'],
+producer = KafkaProducer(bootstrap_servers=[f'{KAFKA_IP}:9092'],
                          value_serializer=lambda x: 
                          dumps(x).encode('utf-8'))
 
 consumer = KafkaConsumer(
     'numtest',
-     bootstrap_servers=[f'{KAFKA_IP}:9094'],
+     bootstrap_servers=[f'{KAFKA_IP}:9092'],
      auto_offset_reset='earliest',
      enable_auto_commit=True,
      group_id='my-group',
@@ -25,7 +25,7 @@ consumer = KafkaConsumer(
 
 @app.route('/')
 def hello():
-    return "Hello, KUBE 2!"
+    return "Hello, KUBE 3!"
 
 @app.route('/check-consumer')
 def check_output():
@@ -38,13 +38,11 @@ def check_output():
 @app.route('/upload-excel', methods=['POST'])
 def upload_excel():
     try:
-        # Check if the post request has the file part
         if 'file' not in request.files:
             return jsonify({'error': 'No file part'}), 400
 
         file = request.files['file']
 
-        # If the user does not select a file, the browser may send an empty file without a filename
         if file.filename == '':
             return jsonify({'error': 'No selected file'}), 400
 

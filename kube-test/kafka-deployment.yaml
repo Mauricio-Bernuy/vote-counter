@@ -51,6 +51,7 @@ spec:
           ports:
             - containerPort: 9092
             - containerPort: 9094
+            - containerPort: 29092
           resources: {}
           volumeMounts:
             - mountPath: /bitnami

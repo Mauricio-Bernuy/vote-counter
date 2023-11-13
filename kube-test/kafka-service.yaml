@@ -16,6 +16,9 @@ spec:
     - name: "9094"
       port: 9094
       targetPort: 9094
+    - name: "29092"
+      port: 29092
+      targetPort: 29092
   selector:
     io.kompose.service: kafka
 status:
