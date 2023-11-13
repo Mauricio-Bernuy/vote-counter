@@ -1,5 +1,8 @@
 # current development
 files stored in /kube-test
+# Parcial 2 Video: 
+
+
 
 # commands
 current development commands in /kube-test/cmds.md
