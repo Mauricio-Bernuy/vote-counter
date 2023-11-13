@@ -1,8 +1,7 @@
 # current development
 files stored in /kube-test
 # Parcial 2 Video: 
-
-
+https://github.com/Mauricio-Bernuy/vote-counter/raw/main/Cloud%20Parcial%202_H.264.mp4
 
 # commands
 current development commands in /kube-test/cmds.md
