@@ -1,0 +1,55 @@
+version: "3"
+services:
+  kafka:
+    image: 'docker.io/bitnami/kafka:latest'
+    ports:
+      - '9092:9092'
+      - '9094:9094'
+    expose:
+      - '29092'
+    volumes:
+      - "kafka_data:/bitnami"
+    networks:
+      - container
+    environment:
+      - KAFKA_ENABLE_KRAFT=yes
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_CFG_BROKER_ID=1
+      - KAFKA_CFG_PROCESS_ROLES=broker,controller
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9094
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,EXTERNAL://localhost:9094
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@:9093
+      - ALLOW_PLAINTEXT_LISTENER=yes
+
+  kafka-init:
+    image: 'docker.io/bitnami/kafka:latest'
+    networks:
+      - container
+    command: [ "sh", "/create_topic.sh"]
+    depends_on:
+      kafka:
+        condition: service_started
+    volumes:
+      - type: bind
+        source: ./create_topic.sh
+        target: /create_topic.sh
+    init: true
+    
+volumes:
+  kafka_data:
+    driver: local
+
+networks:
+  container:
+    name: net
+
+
+# kafka-topics.sh --bootstrap-server localhost:9092 --create --topic pageview
+# kafka-topics.sh --bootstrap-server localhost:9092 --list
+
+# kafka-topics.sh --describe --topic numtest  --bootstrap-server kafka:9092
+
+# kafka-console-producer.sh --producer.config /opt/bitnami/kafka/config/producer.properties --bootstrap-server 127.0.0.1:9094 --topic test
+# kafka-console-consumer.sh --consumer.config /opt/bitnami/kafka/config/consumer.properties --bootstrap-server 127.0.0.1:9094 --topic test --from-beginning

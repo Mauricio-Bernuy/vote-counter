@@ -20,7 +20,9 @@ minikube dashboard
 ## list online systems
 kubectl get deployments
 kubectl get pods
-kubectl get services
+kubectl get services //lists ips
+## logs
+kubectl logs test-dep-d799654ff-5g2z6
 
 
 
