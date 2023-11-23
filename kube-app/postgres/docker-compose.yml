@@ -19,10 +19,3 @@ services:
       - postgres
     ports:
       - 3000:3000
-
-    # networks:
-    #   - initexample
-
-# networks:
-#   initexample:
-#     driver: bridge

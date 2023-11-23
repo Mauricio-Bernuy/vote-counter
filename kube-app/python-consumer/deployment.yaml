@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-db
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: consumer-db-app
+  template:
+    metadata:
+      labels:
+        app: consumer-db-app
+    spec:
+      containers:
+      - name: python-consumer
+        image: python-consumer:local
+        imagePullPolicy: Never 
+        

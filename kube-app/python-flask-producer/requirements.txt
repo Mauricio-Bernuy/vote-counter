@@ -3,3 +3,4 @@ Werkzeug==2.2.2
 pandas
 openpyxl
 kafka-python
+psycopg2-binary
