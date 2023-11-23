@@ -4,19 +4,21 @@ files stored in /kube-test
 https://github.com/Mauricio-Bernuy/vote-counter/raw/main/Cloud%20Parcial%202_H.264.mp4
 
 # commands
-current development commands in /kube-test/cmds.md
+current development commands in /kube-app/cmds.md
+per service build commands in each folder of /kube-app
 
 ## Working right now:
-- kubernetes cluster generates 6 excel parsing pods
-- sends them to kafka pod as producer
-- api consumer reads from the kafka broker and outputs json on browser
+- **python-flask-producer** generates n excel parsing pods
+- sends each row to **kafka** service as producer
+- n **python-consumer** pods get messages from the broker, and add them to a **postgres** DB 
+- **metabase** service allows real time visualization of the processed votes
 ## ToDo
-- consumer worker pods working automatically to add data to DB
-- upload to cloud evironment
-- display data on web app if possible
+- try to push to GCP (problems with account quota)
+- stress test for the API.
+
 
 ## generadatos
 
 pip install flask
 pip install names
-python app.py
+python3 /SW2-codes/app.py
