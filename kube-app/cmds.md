@@ -1,9 +1,11 @@
+## minikube
+minikube start
+
 ## build docker image
 eval $(minikube docker-env) && docker build -t test-image:local .
 
 ## setup kubernetes cluster (producer pods)
-kubectl apply -f deployment.yaml
-kubectl apply -f service.yaml
+kubectl apply -f deployment.yaml,service.yaml
 minikube service test-dep // creates ip in order to connect from localhost
 
 ## rebuild image and update cluster pods (producer pods)
@@ -11,8 +13,7 @@ eval $(minikube docker-env) && docker build -t test-image:local .
 kubectl rollout restart -n default deployment test-dep
 
 ## delete cluster (if needed) (producer pods)
-kubectl delete -f deployment.yaml
-kubectl delete -f service.yaml
+kubectl delete -f deployment.yaml,service.yaml
 
 ## open kubernetes dashboard
 minikube dashboard
@@ -21,6 +22,7 @@ minikube dashboard
 kubectl get deployments
 kubectl get pods
 kubectl get services //lists ips
+
 ## logs
 kubectl logs test-dep-d799654ff-5g2z6
 

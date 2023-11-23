@@ -8,7 +8,7 @@ from kafka import KafkaConsumer
 
 
 app = Flask(__name__)
-KAFKA_IP = "10.98.91.16" # kafka cluster ip
+KAFKA_IP = "10.103.40.8" # kafka cluster ip TODO automatically get the ip
 # KAFKA_IP = "localhost"
 
 producer = KafkaProducer(bootstrap_servers=[f'{KAFKA_IP}:9092'],

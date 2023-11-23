@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  postgresql:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '5432:5432'
+    # volumes:
+      # - 'postgresql_data:/bitnami/postgresql'
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=votesdatabase
+
+  metabase:
+    image: metabase/metabase:latest
+    depends_on:
+      - postgres
+    ports:
+      - 3000:3000
+
+    # networks:
+    #   - initexample
+
+# networks:
+#   initexample:
+#     driver: bridge
