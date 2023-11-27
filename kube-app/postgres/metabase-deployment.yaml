@@ -13,7 +13,8 @@ spec:
   selector:
     matchLabels:
       io.kompose.service: metabase
-  strategy: {}
+  strategy:
+    type: Recreate
   template:
     metadata:
       annotations:
@@ -29,5 +30,14 @@ spec:
           ports:
             - containerPort: 3000
           resources: {}
+          volumeMounts:
+            - mountPath: /dev/random
+              name: metabase-claim0
+              readOnly: true
       restartPolicy: Always
+      volumes:
+        - name: metabase-claim0
+          persistentVolumeClaim:
+            claimName: metabase-claim0
+            readOnly: true
 status: {}

@@ -17,5 +17,8 @@ services:
     image: metabase/metabase:latest
     depends_on:
       - postgres
+    volumes:
+    - /dev/urandom:/dev/random:ro
     ports:
       - 3000:3000
+     

@@ -31,11 +31,8 @@ spec:
               value: pass
             - name: POSTGRES_USER
               value: admin
-          # image: postgresql
-
           image: pgsql-init:local
           imagePullPolicy: Never 
-          name: postgresql
           ports:
             - containerPort: 5432
           resources: {}
