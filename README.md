@@ -1,3 +1,7 @@
+# Integrantes:
+Claudia Noche
+Mauricio Bernuy
+
 # current development
 files stored in /kube-test
 # Parcial 2 Video: 
