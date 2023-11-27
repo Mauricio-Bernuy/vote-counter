@@ -1,6 +1,6 @@
 # Integrantes:
-Claudia Noche
-Mauricio Bernuy
+- Claudia Noche
+- Mauricio Bernuy
 
 # current development
 files stored in /kube-test
