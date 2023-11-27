@@ -26,3 +26,6 @@ CREATE TABLE IF NOT EXISTS conteovalido(
 	esvalido bool PRIMARY KEY NOT NULL,
 	conteo int DEFAULT 0 NOT NULL
 );
+
+INSERT INTO conteovalido VALUES('True',0);
+INSERT INTO conteovalido VALUES('False',0);
