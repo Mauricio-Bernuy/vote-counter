@@ -21,4 +21,4 @@ services:
     - /dev/urandom:/dev/random:ro
     ports:
       - 3000:3000
-     
+

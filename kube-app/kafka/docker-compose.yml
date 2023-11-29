@@ -9,8 +9,6 @@ services:
       - '29092'
     volumes:
       - "kafka_data:/bitnami"
-    # networks:
-    #   - container
     environment:
       - KAFKA_ENABLE_KRAFT=yes
       - KAFKA_CFG_NODE_ID=1
@@ -22,7 +20,6 @@ services:
       - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,EXTERNAL://localhost:9094
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@:9093
       - ALLOW_PLAINTEXT_LISTENER=yes
-    # command: [ "sh", "/create_topic.sh"]
     depends_on:
       - migration
 
@@ -32,26 +29,8 @@ services:
     build: .
     image: 'docker.io/bitnami/kafka:latest'
     command:  sh -c "kafka-topics.sh --create --topic numtest --partitions 1 --bootstrap-server kafka:9092 || kafka-topics.sh --alter --topic numtest --partitions 6 --bootstrap-server kafka:9092"
-
-  # kafka-init:
-  #   image: 'docker.io/bitnami/kafka:latest'
-  #   networks:
-  #     - container
-  #   command: [ "sh", "/create_topic.sh"]
-  #   depends_on:
-  #     kafka:
-  #       condition: service_started
-  #   volumes:
-  #     - type: bind
-  #       source: ./create_topic.sh
-  #       target: /create_topic.sh
-  #   init: true
     
 volumes:
   kafka_data:
     driver: local
-
-# networks:
-#   container:
-#     name: net
 
